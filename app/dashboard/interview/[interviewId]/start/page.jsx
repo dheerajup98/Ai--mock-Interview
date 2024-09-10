@@ -5,6 +5,7 @@ import { eq } from 'drizzle-orm';
 import { db } from '@/utils/db';
 import { AiMock } from '@/utils/schema';
 import QuestionSection from './_component/QuestionSection';
+import RecordAnswerSection from './_component/RecordAnswerSection';
 
 function startInterview({params}) {
 
@@ -29,9 +30,14 @@ function startInterview({params}) {
 
   return (
     <div>
-        <div className="grid grid-cols-1 md:grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
 
             <QuestionSection mockInterviewQuestion={mockInterviewQuestion}
+            activeQuestionIndex = {activeQuestionIndex}
+            />
+
+            <RecordAnswerSection
+            mockInterviewQuestion={mockInterviewQuestion}
             activeQuestionIndex = {activeQuestionIndex}
             />
 
