@@ -6,6 +6,8 @@ import { db } from '@/utils/db';
 import { AiMock } from '@/utils/schema';
 import QuestionSection from './_component/QuestionSection';
 import RecordAnswerSection from './_component/RecordAnswerSection';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 function startInterview({params}) {
 
@@ -39,12 +41,22 @@ function startInterview({params}) {
             <RecordAnswerSection
             mockInterviewQuestion={mockInterviewQuestion}
             activeQuestionIndex = {activeQuestionIndex}
+            interviewData = {interviewData}
             />
 
 
         </div>
-
+        <div className=" flex justify-end gap-6">
+                 {activeQuestionIndex>0&& <Button onClick={()=>setActiveQuestionIndex(activeQuestionIndex-1)}>Previous Button</Button>}
+                {activeQuestionIndex!=mockInterviewQuestion?.length-1&& <Button onClick={()=>setActiveQuestionIndex(activeQuestionIndex+1)}>Next Button</Button>}
+                {activeQuestionIndex==mockInterviewQuestion?.length-1&&
+                <Link href={'/dashboard/interview/'+interviewData?.mockId+'/feedback'}>
+                <Button>End Button</Button>
+                </Link>}
+        </div>
     </div>
+
+    
   )
 }
 
