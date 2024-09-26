@@ -12,6 +12,7 @@ import { toast } from 'sonner';
 import { chatSession } from '@/utils/GeminiAiModel';
 import { useUser } from '@clerk/nextjs';
 import moment from 'moment';
+import { UserAnswer } from '@/utils/schema';
 
 function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex,interviewData}) {
 
@@ -26,6 +27,8 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex,interv
         results,
         startSpeechToText,
         stopSpeechToText,
+        setResults
+
       } = useSpeechToText({
         continuous: true,
         useLegacyResults: false
@@ -58,7 +61,9 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex,interv
       const updateUserAns = async()=>{
 
         console.log(userAnswer)
+
         setLoadding(true)
+
         const feedbackPrompt = "Question:"+  mockInterviewQuestion[activeQuestionIndex]?.question+" ,user answer:"+userAnswer +
           ", Depends on questions and user Answer for give interview question"+ " please give us rating for answer and feebback as area of improvement if any" +
           "in just 3 to 5 lines to improve in JSON format with rating field and feedback field."
@@ -84,10 +89,14 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex,interv
 
           if(resp){
           toast("user recorded answer successfully");
+          setUserAnswer('')
+          setResults([]);
           }
+
+          setResults([]);
            
            setLoadding(false)
-           setUserAnswer('')
+           
         }
 
   return (
